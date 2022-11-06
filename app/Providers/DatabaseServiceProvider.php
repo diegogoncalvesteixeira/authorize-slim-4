@@ -16,7 +16,9 @@ class DatabaseServiceProvider extends ServiceProvider
         $capsule->setAsGlobal();
         $capsule->bootEloquent();
 
-        $this->bind(DB::class, fn () => $capsule);
+        $this->bind(DB::class, function () use ($capsule) {
+          return $capsule;
+        });
     }
 
     public function boot()

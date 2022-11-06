@@ -9,9 +9,8 @@ abstract class Kernel
     /**
      * Register application Bootstrap Loaders
      *
-     * @var array
      */
-    public array $bootstrappers = [];
+    public $bootstrappers = [];
 
 
     public function __construct(&$app)

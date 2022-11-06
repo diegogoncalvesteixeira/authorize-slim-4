@@ -18,7 +18,9 @@ class RouteContextMiddleware
 
         throw_when(empty($route), "Route not found in request");
 
-        app()->bind(Redirect::class, fn (ResponseFactory $factory) => new Redirect($factory));
+        app()->bind(Redirect::class, function (ResponseFactory $factory) {
+          return new Redirect($factory);
+        });
 
         $input = new RequestInput($request, $route);
         app()->bind(RequestInput::class, $input);
@@ -26,13 +28,15 @@ class RouteContextMiddleware
         $kernel = app()->resolve(\App\Http\HttpKernel::class);
 
         collect($kernel->requests)->each(
-          fn ($form) => app()->bind($form, function () use ($form, $request, $route) : FormRequest {
+          function ($form) use ($request, $route, $input) {
+            return app()->bind($form, function () use ($form, $request, $route): FormRequest {
               $input = new $form($request, $route);
 
               $input->validate();
 
               return $input;
-          })
+            });
+          }
         );
 
         return $handler->handle($request);

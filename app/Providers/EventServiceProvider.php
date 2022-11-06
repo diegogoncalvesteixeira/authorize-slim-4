@@ -14,7 +14,9 @@ class EventServiceProvider extends ServiceProvider
 
     public function boot()
     {
-        event()->listen('flash.error', fn ($message) => session()->flash()->add('error', $message));
-        event()->listen('flash.success', fn ($message) => session()->flash()->add('success', $message));
+      //example
+      //event()->listen('example.error', function ($message) {
+      //  return session()->flash()->add('error', $message);
+      //});
     }
 }

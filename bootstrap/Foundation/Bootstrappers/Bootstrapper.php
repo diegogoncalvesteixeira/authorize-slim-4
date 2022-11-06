@@ -16,10 +16,18 @@ class Bootstrapper
     final public static function setup(&$app, &$kernel, array $bootstrappers)
     {
         collect($bootstrappers)
-            ->map(fn ($bootstrapper) => new $bootstrapper($app, $kernel))
-            ->each(fn (Bootstrapper $bootstrapper) => $bootstrapper->beforeBoot())
-            ->each(fn (Bootstrapper $bootstrapper) => $bootstrapper->boot())
-            ->each(fn (Bootstrapper $bootstrapper) => $bootstrapper->afterBoot());
+            ->map(function ($bootstrapper) use ($app, $kernel) {
+              return new $bootstrapper($app, $kernel);
+            })
+            ->each(function (Bootstrapper $bootstrapper) {
+              return $bootstrapper->beforeBoot();
+            })
+            ->each(function (Bootstrapper $bootstrapper) {
+              return $bootstrapper->boot();
+            })
+            ->each(function (Bootstrapper $bootstrapper) {
+              return $bootstrapper->afterBoot();
+            });
     }
 
     public function beforeBoot()

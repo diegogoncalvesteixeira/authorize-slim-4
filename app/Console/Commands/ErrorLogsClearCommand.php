@@ -16,7 +16,9 @@ class ErrorLogsClearCommand extends Command
 
         throw_when(!$path, "Views cache path not found", \RuntimeException::class);
 
-        collect($files->glob("{$path}/*"))->each(fn ($error_log) => $files->delete($error_log));
+        collect($files->glob("{$path}/*"))->each(function ($error_log) use ($files) {
+          return $files->delete($error_log);
+        });
 
         $this->info("Error Logs Cleared Successfully!");
     }

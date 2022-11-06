@@ -43,7 +43,9 @@ if (!function_exists('old'))
     {
         $input = app()->resolve('old_input');
 
-        $field = collect($input)->filter(fn ($value, $field) => $key == $field);
+        $field = collect($input)->filter(function ($value, $field) use ($key) {
+          return $key == $field;
+        });
 
         if (isset($field[$key])) {
             return $field[$key];

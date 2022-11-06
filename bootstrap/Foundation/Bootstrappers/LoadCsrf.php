@@ -9,6 +9,8 @@ class LoadCsrf extends Bootstrapper
 {
     public function boot()
     {
-        $this->app->bind('csrf', fn (ResponseFactory $factory) => new Guard($factory));
+        $this->app->bind('csrf', function (ResponseFactory $factory) {
+          return new Guard($factory);
+        });
     }
 }

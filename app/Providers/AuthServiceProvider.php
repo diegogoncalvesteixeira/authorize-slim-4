@@ -8,7 +8,9 @@ class AuthServiceProvider extends ServiceProvider
 {
     protected function beforeRegistering()
     {
-       //  app()->bind(Auth::class, fn () => (Auth::class));
+//         app()->bind(Auth::class, function () {
+//           return (Auth::class);
+//         });
     }
 
     public function register()

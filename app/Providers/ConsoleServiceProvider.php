@@ -19,10 +19,14 @@ class ConsoleServiceProvider extends ServiceProvider
         $kernel = $this->app->resolve(Kernel::class);
 
         $route_commands = Console::commands();
-        $kernel_commands = collect($kernel->commands)->map(fn ($command) => new $command);
+        $kernel_commands = collect($kernel->commands)->map(function ($command) {
+          return new $command;
+        });
 
         collect([...$kernel_commands, ...$route_commands])->each(
-            fn ($command) => Console::console()->add($command)
+            function ($command) {
+              return Console::console()->add($command);
+            }
         );
     }
 }

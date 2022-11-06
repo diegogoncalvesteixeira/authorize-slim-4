@@ -8,6 +8,8 @@ class LoadAliases extends Bootstrapper
     {
         $aliases = config('app.aliases');
 
-        array_walk($aliases, fn ($path, $alias) => class_alias($path, $alias, true));
+        array_walk($aliases, function ($path, $alias) {
+          return class_alias($path, $alias, true);
+        });
     }
 }

@@ -10,24 +10,24 @@ class HttpKernel extends Kernel
      * Injectable Request Input Form Request Validators
      * @var array
      */
-    public array $requests = [];
+    public $requests = [];
 
     /**
      * Global Middleware
      *
      * @var array
      */
-    public array $middleware = [];
+    public $middleware = [];
 
     /**
      * Route Group Middleware
      */
-    public array $middlewareGroups = [
+    public $middlewareGroups = [
         'api' => [],
         'web' => []
     ];
 
-    public array $bootstrappers = [
+    public $bootstrappers = [
         Bootstrappers\LoadSession::class,
         Bootstrappers\LoadEnvironmentDetector::class,
         Bootstrappers\LoadEnvironmentVariables::class,

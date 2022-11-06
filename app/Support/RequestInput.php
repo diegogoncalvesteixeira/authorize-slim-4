@@ -53,14 +53,18 @@ class RequestInput
 
     public function merge($array)
     {
-        array_walk($array, fn ($value, $key) => data_set($this->attributes, $key, $value));
+        array_walk($array, function ($value, $key) {
+          return data_set($this->attributes, $key, $value);
+        });
 
         return $this;
     }
 
     public function fill($array)
     {
-        array_walk($array, fn ($value, $key) => data_fill($this->attributes, $key, $value));
+        array_walk($array, function ($value, $key) {
+          return data_fill($this->attributes, $key, $value);
+        });
 
         return $this;
     }

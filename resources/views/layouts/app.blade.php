@@ -2,7 +2,7 @@
 <html>
     <head>
         <title>
-            Slim 4 Authentication
+            Jobsity
         </title>
 
         <link rel="stylesheet" href="{{ asset('css/app.css') }}">

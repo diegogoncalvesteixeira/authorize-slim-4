@@ -10,7 +10,9 @@ class TranslatorServiceProvider extends SlimServiceProvider
 {
     public function register()
     {
-        $this->app->bind(FileLoader::class, fn (Filesystem $files) => new FileLoader($files, config('translate.path')));
+        $this->app->bind(FileLoader::class, function (Filesystem $files) {
+          return new FileLoader($files, config('translate.path'));
+        });
 
         $this->app->bind(Translator::class, function (FileLoader $loader) {
             $loader->addNamespace('languages', config('translate.path'));

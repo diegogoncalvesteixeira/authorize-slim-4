@@ -1,5 +1,8 @@
-vendor
-.idea
+.idea/
+.vscode/
+/coverage/
+/vendor/
+/logs/*
+.phpunit.result.cache
 .env
-.vagrant
-node_modules
+!.env.sample

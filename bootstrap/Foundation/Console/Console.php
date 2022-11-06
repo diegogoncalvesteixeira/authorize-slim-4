@@ -12,8 +12,8 @@ class Console extends SymfonyCommand
 {
     use FormatOutput;
 
-    protected InputInterface $input;
-    protected OutputInterface $output;
+    protected $input;
+    protected $output;
     protected $handler = false;
 
     protected static $app;
@@ -56,12 +56,13 @@ class Console extends SymfonyCommand
         array_shift($input);
 
         // '{name}' => 'name'
-        $set_name = fn ($arg) => Str::of($arg)->between('{', '}');
+        $set_name = function ($arg) {
+          return Str::of($arg)->between('{', '}');
+        };
 
-        $add_argument = fn ($arg) => $command->addArgument(
-            $set_name($arg),
-            InputArgument::REQUIRED
-        );
+        $add_argument = function ($arg) use ($command, $set_name) {
+          return $command->addArgument($set_name($arg), InputArgument::REQUIRED);
+        };
 
         collect($input)->each($add_argument);
 

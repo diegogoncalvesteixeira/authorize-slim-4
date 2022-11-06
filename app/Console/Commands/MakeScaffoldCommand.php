@@ -38,7 +38,9 @@ abstract class MakeScaffoldCommand extends Command
         $searching = $resolved->keys();
 
         return $searching->reduce(
-            fn ($stub, $search) => Str::of($stub)->replace($search, $resolved[$search]),
+            function ($stub, $search) use ($resolved) {
+              return Str::of($stub)->replace($search, $resolved[$search]);
+            },
             $stub
         );
     }

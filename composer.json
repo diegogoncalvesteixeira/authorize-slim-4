@@ -1,25 +1,32 @@
 {
-    "keywords": ["Php", "Slim 4", "Php Authentication", "Slim 4 Authentication"],
+    "name": "jobsity/slim-challenge",
+    "description": "PHP Challenge - Jobsity",
+    "type": "project",
     "require": {
         "slim/slim": "4.*",
         "slim/psr7": "^1.0",
         "php-di/php-di": "^6.0",
         "jenssegers/blade": "^1.2",
-        "php": "^7.4",
+        "php": "^7.3 || ^8.0",
         "ext-curl": "*",
         "ext-json": "*",
         "php-di/slim-bridge": "^3.0",
-        "illuminate/support": "^7.0.0",
-        "illuminate/database": "^7.4",
+        "illuminate/support": "*",
+        "illuminate/database": "*",
         "zeuxisoo/slim-whoops": "^0.7.2",
         "vlucas/phpdotenv": "^4.1",
         "robmorgan/phinx": "^0.11.5",
-        "fzaninotto/faker": "^1.9",
+        "fzaninotto/faker": "*",
         "slim/csrf": "^1.0",
         "illuminate/validation": "^7.6",
-        "swiftmailer/swiftmailer": "^6.0",
+        "swiftmailer/swiftmailer": "6.0",
         "guzzlehttp/guzzle": "^6.5",
-        "illuminate/mail": "^7.7"
+        "illuminate/mail": "^7.7",
+        "symfony/process": "^6.0",
+        "symfony/dotenv": "^5.2",
+        "php-amqplib/php-amqplib": "^3.4",
+        "firebase/php-jwt": "^6.3",
+        "ext-openssl": "*"
     },
     "autoload": {
         "files": [
@@ -30,15 +37,46 @@
         ],
         "psr-4": {
             "App\\": "app",
-            "Boot\\": "bootstrap"
+            "Boot\\": "bootstrap",
+            "Tests\\": "tests/"
         }
     },
     "scripts": {
         "post-root-package-install": [
             "php -r \"file_exists('.env') || copy('.env.example', '.env');\""
-        ]
+        ],
+        "start": "php -S localhost:8080 -t public",
+        "test": "composer migrate:refresh && composer migrate:seed:run && phpunit",
+        "worker": "php rabbitmq-email-worker.php",
+        "migrate:run": "php vendor/bin/phinx migrate",
+        "migrate:rollback": "php vendor/bin/phinx rollback",
+        "migrate:reset": "php vendor/bin/phinx rollback -t 0",
+        "migrate:refresh": "php vendor/bin/phinx rollback -t 0 && php vendor/bin/phinx migrate",
+        "migrate:status": "php vendor/bin/phinx status",
+        "migrate:create": "php vendor/bin/phinx create",
+        "migrate:seed:create": "php vendor/bin/phinx seed:create",
+        "migrate:seed:run": "php vendor/bin/phinx seed:run",
+        "migrate:seed:rollback": "php vendor/bin/phinx seed:rollback",
+        "migrate:seed:status": "php vendor/bin/phinx seed:status",
+        "implementation:run": "composer install && composer migrate:refresh && composer migrate:seed:run && composer start"
     },
     "require-dev": {
-        "laravel/homestead": "^10.7"
+        "jangregor/phpstan-prophecy": "^1.0.0",
+        "phpspec/prophecy-phpunit": "^2.0",
+        "phpstan/extension-installer": "^1.2.0",
+        "phpstan/phpstan": "^1.8",
+        "phpunit/phpunit": "^9.5.26",
+        "squizlabs/php_codesniffer": "^3.7"
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "tests/"
+        }
+    },
+    "config": {
+        "allow-plugins": {
+            "kylekatarnls/update-helper": true,
+            "phpstan/extension-installer": true
+        }
     }
 }

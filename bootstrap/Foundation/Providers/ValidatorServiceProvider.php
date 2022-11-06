@@ -15,7 +15,9 @@ class ValidatorServiceProvider extends SlimServiceProvider
     {
         $this->bind(
             DatabasePresenceVerifierInterface::class,
-            fn(DB $capsule) => new DatabasePresenceVerifier($capsule->getDatabaseManager())
+            function (DB $capsule) {
+              return new DatabasePresenceVerifier($capsule->getDatabaseManager());
+            }
         );
 
         $this->bind(

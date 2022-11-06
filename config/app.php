@@ -4,12 +4,17 @@ return [
     /**
      * Application name
      */
-    'name' => env('APP_NAME', 'Slim 4 Auth App'),
+    'name' => env('APP_NAME', 'Jobsity Challenge'),
 
     /**
      * Application Environment
      */
-    'env' => env('APP_ENV', 'production'),
+    'env' => env('APP_ENV', 'dev'),
+
+    /**
+     * Application Environment
+     */
+    'key' => env('APP_KEY', 'example_key'),
 
     /**
      * Determine if you want to display extended debug information
@@ -20,12 +25,12 @@ return [
     /**
      * Register App Url
      */
-    'url' => env('APP_URL', 'http://slim.auth'),
+    'url' => env('APP_URL', 'http://jobsity'),
 
     /**
      * Register Timezone
      */
-    'timezone' => 'UTC',
+    'timezone' => env('APP_TIMEZONE', 'UTC'),
 
     /**
      * The application locale Determines the default locale that will be used
@@ -50,10 +55,10 @@ return [
         \App\Providers\AuthServiceProvider::class,
         \App\Providers\EventServiceProvider::class,
         \App\Providers\DatabaseServiceProvider::class,
-        \App\Providers\BladeServiceProvider::class,
     ],
     'aliases' => [
         'Auth' => \App\Support\Auth::class,
         'DB' => \Illuminate\Database\Capsule\Manager::class,
+        'Mail' => \Illuminate\Support\Facades\Mail::class,
     ]
 ];

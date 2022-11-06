@@ -7,7 +7,7 @@ use Psr\Container\ContainerInterface;
 abstract class SlimServiceProvider
 {
     public $app;
-    public ContainerInterface $container;
+    public $container;
 
     final public function __construct(&$app)
     {
@@ -32,13 +32,19 @@ abstract class SlimServiceProvider
 
     final public static function setup(&$app, array $providers)
     {
-        $run_when_exists = fn ($provider, $method) => method_exists($provider, $method)
-            ? $provider->$method()
-            : null;
+        $run_when_exists = function ($provider, $method) {
+          return method_exists($provider, $method) ? $provider->$method() : NULL;
+        };
 
         collect($providers)
-            ->map(fn ($provider) => new $provider($app))
-            ->each(fn (SlimServiceProvider $provider) => $run_when_exists($provider, 'register'))
-            ->each(fn (SlimServiceProvider $provider) => $run_when_exists($provider, 'boot'));
+            ->map(function ($provider) use ($app) {
+              return new $provider($app);
+            })
+            ->each(function (SlimServiceProvider $provider) use ($run_when_exists) {
+              return $run_when_exists($provider, 'register');
+            })
+            ->each(function (SlimServiceProvider $provider) use ($run_when_exists) {
+              return $run_when_exists($provider, 'boot');
+            });
     }
 }

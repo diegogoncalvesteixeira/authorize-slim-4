@@ -13,6 +13,8 @@ class EventServiceProvider extends SlimServiceProvider
     {
         $this->events = new \Boot\Foundation\Events\Dispatcher($this->app);
 
-        $this->bind('events', fn () => $this->events);
+        $this->bind('events', function () {
+          return $this->events;
+        });
     }
 }

@@ -9,7 +9,7 @@ class RouteGroup
     public $app;
     public $prefix;
     public $routes;
-    public array $middleware = [];
+    public $middleware = [];
 
     public function __construct(&$app)
     {
@@ -45,9 +45,9 @@ class RouteGroup
            require $this->routes;
         });
 
-        collect($this->middleware)->each(fn ($guard) => $group->add(
-            $this->app->resolve($guard)
-        ));
+        collect($this->middleware)->each(function ($guard) use ($group) {
+          return $group->add($this->app->resolve($guard));
+        });
 
         Route::setup($this->app);
     }

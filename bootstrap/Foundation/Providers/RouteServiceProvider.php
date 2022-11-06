@@ -11,6 +11,8 @@ class RouteServiceProvider extends SlimServiceProvider
     {
         Route::setup($this->app);
 
-        $this->bind(RouteGroup::class, fn () => new RouteGroup($this->app));
+        $this->bind(RouteGroup::class, function () {
+          return new RouteGroup($this->app);
+        });
     }
 }

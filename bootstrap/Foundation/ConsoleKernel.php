@@ -4,7 +4,7 @@ namespace Boot\Foundation;
 
 class ConsoleKernel extends Kernel
 {
-    public array $bootstrappers = [
+    public $bootstrappers = [
         Bootstrappers\LoadEnvironmentDetector::class,
         Bootstrappers\LoadEnvironmentVariables::class,
         Bootstrappers\LoadConfiguration::class,

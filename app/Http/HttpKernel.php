@@ -10,11 +10,9 @@ class HttpKernel extends Kernel
      * Injectable Request Input Form Request Validators
      * @var array
      */
-    public array $requests = [
-        Requests\StoreLoginRequest::class,
-        Requests\StoreRegisterRequest::class,
-        Requests\StoreResetPasswordRequest::class,
-        Requests\UpdateResetPasswordRequest::class,
+    public $requests = [
+        Requests\StoreUserRequest::class,
+        Requests\TokenRequest::class,
     ];
 
     /**
@@ -22,16 +20,17 @@ class HttpKernel extends Kernel
      *
      * @var array
      */
-    public array $middleware = [];
+    public $middleware = [];
 
     /**
      * Route Group Middleware
      */
-    public array $middlewareGroups = [
-        'api' => [],
+    public $middlewareGroups = [
+        'api' => [
+            Middleware\ApiMiddleware::class,
+        ],
         'web' => [
             Middleware\RouteContextMiddleware::class,
-            'csrf'
         ]
     ];
 }

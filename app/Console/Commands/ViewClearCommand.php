@@ -16,7 +16,9 @@ class ViewClearCommand extends Command
 
         throw_when(!$path, "Views cache path not found", \RuntimeException::class);
 
-        collect($files->glob("{$path}/*"))->each(fn ($cached_view) => $files->delete($cached_view));
+        collect($files->glob("{$path}/*"))->each(function ($cached_view) use ($files) {
+          return $files->delete($cached_view);
+        });
 
         $this->info("Cached Views Cleared Successfully!");
     }

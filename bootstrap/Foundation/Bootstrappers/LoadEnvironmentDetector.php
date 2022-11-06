@@ -16,9 +16,15 @@ class LoadEnvironmentDetector extends Bootstrapper
         $http = class_basename(self::HTTP_ENV) === class_basename($this->kernel);
         $console = class_basename(self::CONSOLE_ENV) === class_basename($this->kernel);
 
-        $this->app->bind('bootedViaHttp', fn () => $http);
-        $this->app->bind('bootedViaConsole', fn () => $console);
+        $this->app->bind('bootedViaHttp', function () use ($http) {
+          return $http;
+        });
+        $this->app->bind('bootedViaConsole', function () use ($console) {
+          return $console;
+        });
 
-        $this->app->bind(Kernel::class, fn () => $this->kernel);
+        $this->app->bind(Kernel::class, function () {
+          return $this->kernel;
+        });
     }
 }

@@ -1,9 +1,10 @@
 <?php
 
 return [
-    'driver' => env('MAIL_DRIVER', 'smtp'),
-    'host' => env('MAIL_HOST', 'smtp.mailgun.org'),
-    'port' => env('MAIL_PORT', 587),
+    'method' => env('MAIL_SEND_METHOD', 'email'),
+    'driver' => env('MAIL_MAILER', 'smtp'),
+    'host' => env('MAIL_HOST', 'smtp.mailtrap.io'),
+    'port' => env('MAIL_PORT', 465),
     'from' => [
         'address' => env('MAIL_FROM_ADDRESS', 'from@example.com'),
         'name' => env('MAIL_FROM_NAME', 'From Example')
